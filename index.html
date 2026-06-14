@@ -421,7 +421,8 @@
     @media (max-width: 768px) {
       nav { padding: 1.2rem 1.5rem; }
       .nav-links { gap: 1.3rem; }
-      #hero { padding: 0 1.5rem 4rem; }
+      #hero { padding: 6rem 1.5rem 4rem; justify-content: center; }
+      .hero-name { font-size: clamp(3rem, 12vw, 4rem); }
       .hero-scroll { right: 1.5rem; }
       #o-mne { grid-template-columns: 1fr; padding: 5rem 1.5rem; gap: 2.5rem; }
       #prace { padding: 5rem 1.5rem; }
@@ -443,14 +444,11 @@
 </head>
 <body>
 
-  <!-- PROGRESS BAR -->
   <div id="progress"></div>
 
-  <!-- CUSTOM CURSOR -->
   <div class="cursor" id="cursorDot"><div class="cursor-dot"></div></div>
   <div class="cursor-ring" id="cursorRing"></div>
 
-  <!-- NAV -->
   <nav id="nav">
     <a href="#hero" class="nav-logo">EK</a>
     <ul class="nav-links">
@@ -460,7 +458,6 @@
     </ul>
   </nav>
 
-  <!-- HERO -->
   <section id="hero">
     <p class="hero-eyebrow" id="heroEyebrow">Grafika & Vizuální komunikace</p>
     <h1 class="hero-name" id="heroName" aria-label="Ellen Klementová"></h1>
@@ -471,7 +468,6 @@
     </div>
   </section>
 
-  <!-- O MNĚ -->
   <section id="o-mne">
     <div>
       <p class="section-label gsap-reveal">O mně</p>
@@ -493,7 +489,6 @@
     </div>
   </section>
 
-  <!-- PRÁCE -->
   <section id="prace">
     <div class="section-header gsap-reveal">
       <h2 class="section-heading">Vybrané<br><em style="font-family:'Cormorant Garant',serif;font-style:italic;font-weight:300;">práce</em></h2>
@@ -522,7 +517,6 @@
     </div>
   </section>
 
-  <!-- KONTAKT -->
   <section id="kontakt">
     <div>
       <p class="section-label gsap-reveal" style="color:var(--accent);">Kontakt</p>
@@ -538,13 +532,11 @@
     </div>
   </section>
 
-  <!-- FOOTER -->
   <footer>
     <p>© 2026 Ellen Klementová</p>
     <p>Praha, Česká republika</p>
   </footer>
 
-  <!-- LIGHTBOX -->
   <div class="lightbox" id="lightbox" role="dialog">
     <button class="lightbox-close" id="lightboxClose">×</button>
     <img id="lightboxImg" src="" alt="" />
@@ -583,13 +575,11 @@
     }, { passive: true });
 
     // ── Smooth scroll (native + GSAP ScrollTrigger) ──
-    // Use a simple JS smooth scroll since Lenis isn't on cdnjs
     let currentScroll = 0;
     let targetScroll = 0;
     let ease = 0.08;
     let ticking = false;
 
-    // We'll use native smooth scroll behavior but enhance with GSAP for elements
     // ── Progress bar ──
     const progressBar = document.getElementById('progress');
     window.addEventListener('scroll', () => {
@@ -610,14 +600,12 @@
       gsap.set(cursorDot, { x: mouseX, y: mouseY });
     });
 
-    // Ring follows with lag
     gsap.ticker.add(() => {
       ringX += (mouseX - ringX) * 0.12;
       ringY += (mouseY - ringY) * 0.12;
       gsap.set(cursorRing, { x: ringX, y: ringY });
     });
 
-    // Hover state for interactive elements
     document.querySelectorAll('a, button, .work-item').forEach(el => {
       el.addEventListener('mouseenter', () => cursorRing.classList.add('hovering'));
       el.addEventListener('mouseleave', () => cursorRing.classList.remove('hovering'));
@@ -633,7 +621,6 @@
       heroName.appendChild(span);
     });
 
-    // Hero entrance timeline
     const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
     heroTl
       .to('#heroEyebrow', { opacity: 1, y: 0, duration: 0.7, delay: 0.2 })
@@ -685,11 +672,10 @@
       );
     });
 
-    // ── Work items: staggered reveal + continuous image zoom on hover via GSAP ──
+    // ── Work items ──
     gsap.utils.toArray('.gsap-work').forEach((item, i) => {
       const img = item.querySelector('img');
 
-      // Entrance
       gsap.fromTo(item,
         { opacity: 0, y: 50 },
         {
@@ -705,7 +691,6 @@
         }
       );
 
-      // Smooth image zoom on hover (GSAP instead of CSS transition for smoothness)
       item.addEventListener('mouseenter', () => {
         gsap.to(img, { scale: 1.07, duration: 0.6, ease: 'power2.out' });
       });
